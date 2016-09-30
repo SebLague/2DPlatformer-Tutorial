@@ -163,6 +163,7 @@ public class Controller2D : RaycastController {
 			moveAmount.x = Mathf.Cos (slopeAngle * Mathf.Deg2Rad) * moveDistance * Mathf.Sign (moveAmount.x);
 			collisions.below = true;
 			collisions.climbingSlope = true;
+			collisions.slopeAngle = slopeAngle;
 			collisions.slopeNormal = slopeNormal;
 		}
 	}
@@ -207,7 +208,7 @@ public class Controller2D : RaycastController {
 		if (hit) {
 			float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
 			if (slopeAngle > maxSlopeAngle) {
-				moveAmount.x = hit.normal.x * (Mathf.Abs (moveAmount.y) - hit.distance) / Mathf.Tan (slopeAngle * Mathf.Deg2Rad);
+				moveAmount.x = Mathf.Sign(hit.normal.x) * (Mathf.Abs (moveAmount.y) - hit.distance) / Mathf.Tan (slopeAngle * Mathf.Deg2Rad);
 
 				collisions.slopeAngle = slopeAngle;
 				collisions.slidingDownMaxSlope = true;
